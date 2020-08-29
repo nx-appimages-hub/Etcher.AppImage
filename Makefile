@@ -7,7 +7,7 @@ all:
 	wget --output-document=$(DESTINATION)  --continue $(SOURCE)
 	unzip build.zip
 	chmod +x $(DESTINATION)
-	./balenaEtcher-1.5.81-x64.AppImage --appimage-extract
+	./balenaEtcher-*-x64.AppImage --appimage-extract
 	rm -f squashfs-root/*.png
 	rm -f squashfs-root/*.desktop	
 	rm -f squashfs-root/usr/share/metainfo/desktopeditors.appdata.xml
@@ -15,5 +15,5 @@ all:
 	cp Etcher.desktop squashfs-root/Etcher.desktop
 	export ARCH=x86_64 && bin/appimagetool.AppImage squashfs-root $(OUTPUT)
 	rm -rf squashfs-root
-	rm -rf balenaEtcher-1.5.81-x64.AppImage
+	rm -rf balenaEtcher-*-x64.AppImage
 	rm -rf $(DESTINATION)
