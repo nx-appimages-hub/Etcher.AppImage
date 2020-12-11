@@ -13,8 +13,8 @@ PWD:=$(shell pwd)
 
 all: 
 
-	# mkdir --parents $(PWD)/build/Boilerplate.AppDir/etcher
-	# apprepo --destination=$(PWD)/build appdir boilerplate libatk1.0-0 libatk-bridge2.0-0 libgtk-3-0
+	mkdir --parents $(PWD)/build/Boilerplate.AppDir/etcher
+	apprepo --destination=$(PWD)/build appdir boilerplate libatk1.0-0 libatk-bridge2.0-0 libgtk-3-0
 
 	echo "LD_LIBRARY_PATH=\$${LD_LIBRARY_PATH}:\$${APPDIR}/etcher" >> $(PWD)/build/Boilerplate.AppDir/AppRun
 	echo "export LD_LIBRARY_PATH=\$${LD_LIBRARY_PATH}" >> $(PWD)/build/Boilerplate.AppDir/AppRun
