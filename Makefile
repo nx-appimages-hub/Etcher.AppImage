@@ -15,10 +15,22 @@ all:
 
 	mkdir --parents $(PWD)/build/Boilerplate.AppDir/etcher
 	apprepo --destination=$(PWD)/build appdir boilerplate libatk1.0-0 libatk-bridge2.0-0 libgtk-3-0
-
-	echo "LD_LIBRARY_PATH=\$${LD_LIBRARY_PATH}:\$${APPDIR}/etcher" >> $(PWD)/build/Boilerplate.AppDir/AppRun
-	echo "export LD_LIBRARY_PATH=\$${LD_LIBRARY_PATH}" >> $(PWD)/build/Boilerplate.AppDir/AppRun
-	echo "exec \$${APPDIR}/etcher/balena-etcher-electron \"\$${@}\"" >> $(PWD)/build/Boilerplate.AppDir/AppRun
+	echo '' >> $(PWD)/build/Boilerplate.AppDir/AppRun
+	echo '' >> $(PWD)/build/Boilerplate.AppDir/AppRun
+	echo 'LD_LIBRARY_PATH=$${LD_LIBRARY_PATH}:$${APPDIR}/etcher' >> $(PWD)/build/Boilerplate.AppDir/AppRun
+	echo 'export LD_LIBRARY_PATH=$${LD_LIBRARY_PATH}' >> $(PWD)/build/Boilerplate.AppDir/AppRun
+	echo '' >> $(PWD)/build/Boilerplate.AppDir/AppRun
+	echo '' >> $(PWD)/build/Boilerplate.AppDir/AppRun
+	echo 'UUC_VALUE=`cat /proc/sys/kernel/unprivileged_userns_clone 2> /dev/null`' >> $(PWD)/build/Boilerplate.AppDir/AppRun
+	echo '' >> $(PWD)/build/Boilerplate.AppDir/AppRun
+	echo '' >> $(PWD)/build/Boilerplate.AppDir/AppRun
+	echo '' >> $(PWD)/build/Boilerplate.AppDir/AppRun
+	echo 'if [ -z "$${UUC_VALUE}" ]' >> $(PWD)/build/Boilerplate.AppDir/AppRun
+	echo '    then' >> $(PWD)/build/Boilerplate.AppDir/AppRun
+	echo '        exec $${APPDIR}/etcher/balena-etcher-electron --no-sandbox "$${@}"' >> $(PWD)/build/Boilerplate.AppDir/AppRun
+	echo '    else' >> $(PWD)/build/Boilerplate.AppDir/AppRun
+	echo '        exec $${APPDIR}/etcher/balena-etcher-electron "$${@}"' >> $(PWD)/build/Boilerplate.AppDir/AppRun
+	echo '    fi' >> $(PWD)/build/Boilerplate.AppDir/AppRun
 
 	wget --output-document=$(PWD)/build/build.zip https://github.com/balena-io/etcher/releases/download/v1.5.111/balena-etcher-electron-1.5.111-linux-x64.zip
 	unzip $(PWD)/build/build.zip -d $(PWD)/build
@@ -31,7 +43,7 @@ all:
 	rm -f $(PWD)/build/squashfs-root/usr/share/metainfo/desktopeditors.appdata.xml
 
 	cp --force --recursive $(PWD)/build/squashfs-root/usr/share/* $(PWD)/build/Boilerplate.AppDir/share
-	cp --force --recursive $(PWD)/build/squashfs-root/usr/lib/* $(PWD)/build/Boilerplate.AppDir/lib
+	cp --force --recursive $(PWD)/build/squashfs-root/usr/lib/* $(PWD)/build/Boilerplate.AppDir/lib64
 
 	rm -rf $(PWD)/build/squashfs-root/usr
 
